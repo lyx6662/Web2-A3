@@ -138,7 +138,101 @@ router.get("/:ORGANIZER",(req,res)=>{
     )
 }
 );
+// 获取筹款活动详细信息（通过 ID）及捐款列表
+router.get("/fundraiser/:id", (req, res) => {
+    const fundraiserId = req.params.id;
+    connection.query(`
+        SELECT 
+            f.FUNDRAISER_ID, 
+            f.ORGANIZER, 
+            f.CAPTION, 
+            f.TARGET_FUNDING, 
+            f.CURRENT_FUNDING, 
+            f.CITY, 
+            f.ACTIVE, 
+            c.NAME AS CATEGORY_NAME,
+            d.* -- 假设 DONATION 表的字段
+        FROM 
+            FUNDRAISER f  
+        JOIN 
+            CATEGORY c ON f.CATEGORY_ID = c.CATEGORY_ID
+        LEFT JOIN -- 左连接以获取可能没有捐款的筹款活动信息
+            DONATION d ON f.FUNDRAISER_ID = d.FUNDRAISER_ID
+        WHERE 
+            f.FUNDRAISER_ID =?;`, [fundraiserId], (err, records, fields) => {
+                if (err) {
+                    console.error("Error while retrieving fundraiser details", err);
+                    res.status(500).send("Internal Error");
+                } else {
+                    res.send(records);
+                }
+            });
+});
 
+// 插入新的捐款
+router.post("/donation", (req, res) => {
+    const { fundraiserId, donorName, amount } = req.body;
+    connection.query(`INSERT INTO DONATION (FUNDRAISER_ID, DONOR_NAME, AMOUNT) VALUES (?,?,?)`, [fundraiserId, donorName, amount], (err, result) => {
+        if (err) {
+            console.error("Error while inserting donation", err);
+            res.status(500).send("Internal Error");
+        } else {
+            res.send("Donation inserted successfully");
+        }
+    });
+});
+
+// 插入新的筹款人
+router.post("/fundraiser", (req, res) => {
+    const { organizer, caption, targetFunding, city, categoryId } = req.body;
+    connection.query(`INSERT INTO FUNDRAISER (ORGANIZER, CAPTION, TARGET_FUNDING, CITY, CATEGORY_ID, ACTIVE) VALUES (?,?,?,?,?, 1)`, [organizer, caption, targetFunding, city, categoryId], (err, result) => {
+        if (err) {
+            console.error("Error while inserting fundraiser", err);
+            res.status(500).send("Internal Error");
+        } else {
+            res.send("Fundraiser inserted successfully");
+        }
+    });
+});
+
+// 更新筹款人信息
+router.put("/fundraiser/:id", (req, res) => {
+    const fundraiserId = req.params.id;
+    const { organizer, caption, targetFunding, city, categoryId } = req.body;
+    connection.query(`UPDATE FUNDRAISER SET ORGANIZER =?, CAPTION =?, TARGET_FUNDING =?, CITY =?, CATEGORY_ID =? WHERE FUNDRAISER_ID =?`, [organizer, caption, targetFunding, city, categoryId, fundraiserId], (err, result) => {
+        if (err) {
+            console.error("Error while updating fundraiser", err);
+            res.status(500).send("Internal Error");
+        } else {
+            res.send("Fundraiser updated successfully");
+        }
+    });
+});
+
+// 删除筹款人信息（如果没有捐款）
+router.delete("/fundraiser/:id", (req, res) => {
+    const fundraiserId = req.params.id;
+    connection.query(`SELECT COUNT(*) AS donationCount FROM DONATION WHERE FUNDRAISER_ID =?`, [fundraiserId], (err, donationCountResult) => {
+        if (err) {
+            console.error("Error while checking donations for fundraiser", err);
+            res.status(500).send("Internal Error");
+        } else {
+            const donationCount = donationCountResult[0].donationCount;
+            if (donationCount > 0) {
+                res.status(400).send("Cannot delete fundraiser with existing donations.");
+            } else {
+                connection.query(`DELETE FROM FUNDRAISER WHERE FUNDRAISER_ID =?`, [fundraiserId], (err, deleteResult) => {
+                    if (err) {
+                        console.error("Error while deleting fundraiser", err);
+                        res.status(500).send("Internal Error");
+                    } else {
+                        res.send("Fundraiser deleted successfully");
+                    }
+                });
+            }
+        }
+    });
+});
 
              
 module.exports = router;  //Modularize the created routes
