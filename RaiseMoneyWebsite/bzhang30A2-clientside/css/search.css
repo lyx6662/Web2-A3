@@ -1,0 +1,86 @@
+/*css for search*/
+.searchB{
+    width: 80%;  
+    margin: 0 auto;  
+    margin-top: 50px;
+    padding: 20px;  
+    background-color: #fff;  
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);  
+    border-radius: 8px; 
+}
+
+.searchBox{
+    display: flex;  
+    flex-direction: column;  
+    gap: 10px;  
+}
+
+.searchBox label {  
+    font-size: 16px;  
+    color: #666;  
+}  
+  
+.searchBox input {  
+    width: 100%;  
+    padding: 10px;  
+    border: 1px solid #ccc;  
+    border-radius: 4px;  
+    box-sizing: border-box;  
+}  
+
+button {  
+    padding: 10px 20px;  
+    border: none;  
+    border-radius: 4px;  
+    background-color: #ff6347;
+    color: #fff;  
+    font-size: 16px;  
+    cursor: pointer;  
+    transition: background-color 0.3s;  
+}  
+  
+button:hover {  
+    background-color: #ff4500;
+}  
+
+#clearButton {  
+    background-color: #4682b4; 
+}  
+  
+#clearButton:hover {  
+    background-color: #366092; 
+}  
+  
+#data {  
+    margin-top: 20px;  
+    padding: 10px;  
+    border: 1px solid #ddd;  
+    border-radius: 4px;  
+    background-color: #fafafa;  
+}
+
+.searchTable {  
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 16px;
+    text-align: left;
+}  
+
+.searchTable thead th {  
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+}  
+  
+.searchTable tbody tr {  
+    border-bottom: 1px solid #ddd;
+}  
+  
+.searchTable tbody td {  
+    padding: 12px 15px;
+    border: 1px solid #ddd; 
+    border-top: none;
+}  
+.searchTable tbody tr:hover {  
+    background-color: #989797;
+}

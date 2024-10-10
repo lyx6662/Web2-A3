@@ -1,0 +1,43 @@
+<!DOCTYPE html><html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>search page</title>
+        <script src="../script/search.js"></script>
+        <link rel="stylesheet" href="../css/main.css">
+        <link rel="stylesheet" href="../css/search.css">
+    </head>
+    <body>
+        <div class="decorativeTop"><!--Top navigation bar made of html and css, three pages common-->
+            <div class="webName">
+                <span class="text1">CHARITY</span>  
+            <span class="text2">fundraising</span>  
+            </div>
+            <div class="Navigation">
+                <a href="/"><span>home</span></a>-<span class="current">search</span>-<a href="/fundraiser"><span>fundraiser</span></a>
+                </div>
+            </div>
+        <div class="searchB">
+        <div class="searchBox">
+            <label>Organizer:</label><input type="text" id="organizerInput">
+            <label>City:</label><input type="text" id="cityInput">
+            <label>Category:</label><div id="dropDownBox"></div> 
+            <button id="searchButton" onclick="startSearch()">Search</button>
+            <button id="clearButton" onclick="claerChechboxes()">Clear</button>
+        </div>
+        <div id="data">
+            <table class="searchTable">  
+                <thead>  
+                    <tr>  
+                        <th>Caption</th>  
+                        <th>Organizer</th>  
+                        <th>Category</th>  
+                    </tr>  
+                </thead>  
+                <tbody id="tableBody">  
+                </tbody>  
+            </table>  
+        </div>
+    </div>
+    </body>
+</html>
