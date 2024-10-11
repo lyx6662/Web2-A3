@@ -169,8 +169,9 @@ router.get("/fundraiser/:id", (req, res) => {
 
 // 插入新的捐款
 router.post("/donation", (req, res) => {
+    console.log(req.body);
     const { fundraiserId, donorName, amount } = req.body;
-    connection.query(`INSERT INTO DONATION (FUNDRAISER_ID, DONOR_NAME, AMOUNT) VALUES (?,?,?)`, [fundraiserId, donorName, amount], (err, result) => {
+    connection.query(`INSERT INTO DONATION (FUNDRAISER_ID, GIVER, AMOUNT) VALUES (?,?,?)`, [fundraiserId, donorName, amount], (err, result) => {
         if (err) {
             console.error("Error while inserting donation", err);
             res.status(500).send("Internal Error");

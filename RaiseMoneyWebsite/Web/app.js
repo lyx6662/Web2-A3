@@ -22,6 +22,10 @@ app.get("/fundraiser",(req,res)=>{   //Fundraiser page routing service
     res.sendFile(path.join(__dirname,"./html/fundraiser.html"));
 });
 
+app.get("/donation",(req,res)=>{   //donation page routing service
+    res.sendFile(path.join(__dirname,"./html/donation.html"));
+});
+
 app.listen(8080,()=>{  //Listens on port 8080
     console.log("8080...(~_~)");
 });
