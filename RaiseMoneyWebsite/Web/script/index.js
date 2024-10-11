@@ -6,6 +6,7 @@ fetch("http://localhost:3060/api/raisemoney") //Get database data through the ap
     console.log(data);
     if(data.length > 0){         
         data.forEach(fundraiser => { //Below is to display the incoming data on the page, using javascript to dynamically generate html, I am using css plus html to make a card display.
+            if (fundraiser.ACTIVE!== 0) {
                 const homePageCard = document.createElement('div');
                 homePageCard.classList.add('home_card');
                 const logoContainer = document.createElement('div');
@@ -52,7 +53,7 @@ fetch("http://localhost:3060/api/raisemoney") //Get database data through the ap
                     localStorage.setItem("ORGANIZER",fundraiser.ORGANIZER);
                     location.href = '/fundraiser';
                 });
-
+            }
         });
     }else{
         dataDiv.textContent = "No fundraiser"

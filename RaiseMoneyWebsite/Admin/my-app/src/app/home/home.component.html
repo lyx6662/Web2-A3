@@ -1,0 +1,21 @@
+<button (click)="openMyModal('add')">Add</button>  
+<app-add [isVisible]="isModalVisible && modalType === 'add'" (closeEvent)="handleModalClose()"></app-add>
+
+<button (click)="openMyModal('edit')">Edit</button>  
+<app-edit [isVisible]="isModalVisible && modalType === 'edit'" (closeEvent)="handleModalClose()"></app-edit>
+
+<div *ngIf="fundraisers.length > 0; else noData">
+    <div *ngFor="let fundraiser of fundraisers" class="card">
+      <h3>{{fundraiser.CAPTION}}</h3>
+      <p>Organizer: {{fundraiser.ORGANIZER}}({{fundraiser.FUNDRAISER_ID}})</p>
+      <p>Target Funding: {{fundraiser.TARGET_FUNDING}}</p>
+      <p>Current Funding: {{fundraiser.CURRENT_FUNDING}}</p>
+      <p>City: {{fundraiser.CITY}}</p>
+      <p>Category: {{fundraiser.CATEGORY_NAME}}({{fundraiser.CATEGORY_ID}})</p>
+      <hr>
+    </div>
+  </div>
+  
+  <ng-template #noData>  
+    <p>No fundraisers yet</p>  
+  </ng-template>

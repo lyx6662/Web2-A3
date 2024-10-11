@@ -23,9 +23,7 @@ router.get("/",(req,res)=>{
         FROM
             FUNDRAISER f  
         JOIN
-            CATEGORY c ON f.CATEGORY_ID = c.CATEGORY_ID        
-        WHERE 
-            f.ACTIVE = 1;`,(err,records,fields)=>{
+            CATEGORY c ON f.CATEGORY_ID = c.CATEGORY_ID;`,(err,records,fields)=>{
                 if(err){
                     console.error("Error while retrieve the data");
                 }else{
@@ -184,13 +182,14 @@ router.post("/donation", (req, res) => {
 
 // 插入新的筹款人
 router.post("/fundraiser", (req, res) => {
-    const { organizer, caption, targetFunding, city, categoryId } = req.body;
-    connection.query(`INSERT INTO FUNDRAISER (ORGANIZER, CAPTION, TARGET_FUNDING, CITY, CATEGORY_ID, ACTIVE) VALUES (?,?,?,?,?, 1)`, [organizer, caption, targetFunding, city, categoryId], (err, result) => {
+    console.log('Received request body:', req.body);
+    const { ORGANIZER, CAPTION, TARGET_FUNDING, CURRENT_FUNDING, CITY, CATEGORY_ID, ACTIVE } = req.body;
+    connection.query(`INSERT INTO FUNDRAISER (ORGANIZER, CAPTION, TARGET_FUNDING, CURRENT_FUNDING, CITY, CATEGORY_ID, ACTIVE) VALUES (?,?,?,?,?,?,?)`, [ORGANIZER, CAPTION, TARGET_FUNDING, CURRENT_FUNDING, CITY, CATEGORY_ID,ACTIVE], (err, result) => {
         if (err) {
             console.error("Error while inserting fundraiser", err);
             res.status(500).send("Internal Error");
         } else {
-            res.send("Fundraiser inserted successfully");
+            res.send({ "message": "Fundraiser inserted successfully" });
         }
     });
 });

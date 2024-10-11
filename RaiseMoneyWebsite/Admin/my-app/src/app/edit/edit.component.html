@@ -1,0 +1,43 @@
+<div *ngIf="isVisible" class="modal-overlay" (click)="close()">  
+    <div class="modal-content" (click)="$event.stopPropagation()">  
+      <h2>Fundraiser Details</h2>  
+      <form #fundraiserForm="ngForm">  
+        <div>  
+          <label for="organizer">Organizer:</label>  
+          <input id="organizer" [(ngModel)]="fundraiserDetails.ORGANIZER" name="organizer" required />  
+        </div>  
+        <div>  
+          <label for="caption">Caption:</label>  
+          <input id="caption" [(ngModel)]="fundraiserDetails.CAPTION" name="caption" required />  
+        </div>  
+        <div>  
+          <label for="targetFunding">Target Funding:</label>  
+          <input id="targetFunding" [(ngModel)]="fundraiserDetails.TARGET_FUNDING" name="targetFunding" type="number" required />  
+        </div>  
+        <div>  
+          <label for="currentFunding">Current Funding:</label>  
+          <input id="currentFunding" [(ngModel)]="fundraiserDetails.CURRENT_FUNDING" name="currentFunding" type="number" required />  
+        </div>  
+        <div>  
+          <label for="city">City:</label>  
+          <input id="city" [(ngModel)]="fundraiserDetails.CITY" name="city" required />  
+        </div>  
+        <div>  
+            
+          <div>  
+            <label for="categoryId">Category ID:</label>  
+            <input id="categoryId" [(ngModel)]="fundraiserDetails.CATEGORY_ID" name="categoryId" type="number" required />  
+          </div> 
+
+          <label for="active">Active:</label>  
+          <select id="active" [(ngModel)]="fundraiserDetails.ACTIVE" name="active">  
+            <option value="0">Inactive</option>  
+            <option value="1">Active</option>  
+          </select>  
+        </div>  
+       
+        <button (click)="close()">Close</button>  
+        <button type="submit" (click)="editFundraiser(fundraiserDetails)">Save</button>  
+      </form>  
+    </div>  
+  </div>
