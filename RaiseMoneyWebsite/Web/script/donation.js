@@ -1,3 +1,77 @@
+document.getElementById('donationForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    // 获取传递过来的 fundraiserId（假设通过 URL 参数传递）
+    const urlParams = new URLSearchParams(window.location.search);
+    const fundraiserIdFromUrl = urlParams.get('fundraiserId');
+
+    // 如果有从 URL 获取到的 fundraiserId，则使用它，否则使用表单中的值（如果表单中有默认值的话）
+    const fundraiserId = fundraiserIdFromUrl;
+    const donorName = document.getElementById('donorName').value;
+    const amount = parseFloat(document.getElementById('donationAmount').value);
+
+    // 检查捐款金额是否达到最低要求
+    if (isNaN(amount) || amount < 5) {
+        alert('请确保捐款金额至少为 5 AUD，并输入有效的数字。');
+        return;
+    }
+
+
+    let fundraiserInfoDiv = document.getElementById('fundraiserInfo');
+    // 清空之前的 fundraiser 信息（如果需要）
+    fundraiserInfoDiv.innerHTML = '';
+    console.log(fundraiserId);
+    // 获取选定筹款人的详细信息并展示
+    fetch(`http://localhost:3060/api/raisemoney/fundraiser/${fundraiserId}`)
+    
+    .then(response=>response.json()) 
+   .then(data => {
+    
+
+
+        // 发起捐款请求
+        return fetch(`http://localhost:3060/api/raisemoney/donation`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ fundraiserId, donorName, amount })
+        });
+    })
+   .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.text();
+    })
+   .then(data => {
+        if (data === "Donation inserted successfully") {
+            // 如果服务器返回特定字符串，表示插入成功
+            alert('捐款成功！');
+        } else {
+            try {
+                const donationData = JSON.parse(data);
+                alert(`感谢您向 [${donationData.fundraiserName || '筹款人'}] 捐款！`);
+            } catch (error) {
+                console.error('无法解析捐款响应为 JSON：', error);
+                console.log('服务器返回的原始内容：', data);
+                alert('处理您的捐款时发生错误。');
+            }
+        }
+
+        // 重定向到筹款页面
+        window.location.href = '/fundraiser';
+    })
+   .catch(error => {
+        console.error('Error:', error);
+        if (error instanceof SyntaxError) {
+            console.error('Invalid JSON response:', error.message);
+        }
+        alert('处理您的捐款时发生错误。');
+    });
+});
+
+
 document.addEventListener('DOMContentLoaded', function () {
     const ID = localStorage.getItem('ID');
     if (ID) {
@@ -6,8 +80,7 @@ document.addEventListener('DOMContentLoaded', function () {
            .then(response => response.json())
            .then(data => {
             
-                const dataDiv = document.getElementById('data');
-                const dataDiv2 = document.getElementById('data2');
+                const dataDiv = document.getElementById('data2');
                 dataDiv.innerHTML = "";
                 if (data.length > 0) {
                     data.forEach(fundraiser => {
@@ -92,57 +165,4 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             });
     }
-
-
-
-console.log(ID);
-if(ID){
-fetch("http://localhost:3060/api/raisemoney/fundraiser/"+ID) 
-    .then(response=>response.json()) 
-    .then(data=>{  
-    const dataDiv = document.getElementById('data2');
-    dataDiv.innerHTML = "";
-    console.log(data);
-    if(data.length > 0){         
-        data.forEach(donation => { 
-        
- // 判断是否有捐款信息并输出相关日志
- console.log(donation.AMOUNT);
- if (donation.AMOUNT && donation.GIVER) {
-     console.log('有捐款信息，捐款人：', donation.GIVER, '金额：', donation.AMOUNT);
-     const donationList = document.createElement('ul');
-     const donationItem = document.createElement('li');
-     donationItem.textContent = `Donor: ${donation.GIVER}, Amount: ${donation.AMOUNT}$`;
-     donationList.appendChild(donationItem);
-     dataDiv.appendChild(donationList);
- } else {
-     console.log('没有捐款信息');
-     const noDonations = document.createElement('p');
-     noDonations.textContent = 'No donations yet.';
-     fundraiserCard.appendChild(noDonations);
- }
-
-
         });
-    }else{
-        dataDiv.textContent = "No fundraiser"
-    }
-    })
-
-    .catch(error =>{
-        console.error("Error here",error);
-        document.getElementById('data').textContent = "Load failure";
-    });
-
-}
-});
-
-
-function toDonate() {
-    const ID = localStorage.getItem('ID');
-    if (ID) {
-        window.location.href = `/donation?fundraiserId=${ID}`;
-    } else {
-        alert('No organizer found in local storage.');
-    }
-}
