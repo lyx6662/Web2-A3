@@ -50,7 +50,7 @@ fetch("http://localhost:3060/api/raisemoney") //Get database data through the ap
                 dataDiv.appendChild(homePageCard);
 
                 homePageCard.addEventListener("click",function(){//Click on the card to jump to the fundraiser page and store the ORGANIZER locally
-                    localStorage.setItem("ORGANIZER",fundraiser.ORGANIZER);
+                    localStorage.setItem("ID",fundraiser.FUNDRAISER_ID);
                     location.href = '/fundraiser';
                 });
             }

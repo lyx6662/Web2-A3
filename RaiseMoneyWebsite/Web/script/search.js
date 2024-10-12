@@ -69,7 +69,7 @@ function startSearch(){
                     const newRow = document.createElement("tr"); 
 
                     newRow.addEventListener("click", function () {
-                        localStorage.setItem("ORGANIZER", fundraiser.ORGANIZER);
+                        localStorage.setItem("ID", fundraiser.FUNDRAISER_ID);
                         location.href = '/fundraiser';
                     });
 

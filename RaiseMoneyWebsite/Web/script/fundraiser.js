@@ -1,14 +1,17 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const organizer = localStorage.getItem('ORGANIZER');
-    if (organizer) {
-        const url = 'http://localhost:3060/api/raisemoney/' + organizer;
+    const ID = localStorage.getItem('ID');
+    if (ID) {
+        const url = 'http://localhost:3060/api/raisemoney/' + ID;
         fetch(url)
            .then(response => response.json())
            .then(data => {
+            
                 const dataDiv = document.getElementById('data');
+                const dataDiv2 = document.getElementById('data2');
                 dataDiv.innerHTML = "";
                 if (data.length > 0) {
                     data.forEach(fundraiser => {
+                        console.log('完整的筹款人数据：', fundraiser);
                         const fundraiserCard = document.createElement('div');
                         fundraiserCard.classList.add('fundraiser_Card');
 
@@ -82,22 +85,6 @@ document.addEventListener('DOMContentLoaded', function () {
                         progressBarDiv.appendChild(roundness);
                         tAndP.appendChild(progressBarDiv);
                         fundraiserCard.appendChild(tAndP);
-
-                        // Display donation list for the fundraiser
-                        if (fundraiser.donations && fundraiser.donations.length > 0) {
-                            const donationList = document.createElement('ul');
-                            fundraiser.donations.forEach(donation => {
-                                const donationItem = document.createElement('li');
-                                donationItem.textContent = `Donor: ${donation.donor_name}, Amount: ${donation.amount}$`;
-                                donationList.appendChild(donationItem);
-                            });
-                            fundraiserCard.appendChild(donationList);
-                        } else {
-                            const noDonations = document.createElement('p');
-                            noDonations.textContent = 'No donations yet.';
-                            fundraiserCard.appendChild(noDonations);
-                        }
-
                         dataDiv.appendChild(fundraiserCard);
                     });
                 } else {
@@ -105,8 +92,57 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             });
     }
+
+
+
+console.log(ID);
+if(ID){
+fetch("http://localhost:3060/api/raisemoney/fundraiser/"+ID) 
+    .then(response=>response.json()) 
+    .then(data=>{  
+    const dataDiv = document.getElementById('data2');
+    dataDiv.innerHTML = "";
+    console.log(data);
+    if(data.length > 0){         
+        data.forEach(donation => { 
+        
+ // 判断是否有捐款信息并输出相关日志
+ console.log(donation.AMOUNT);
+ if (donation.AMOUNT && donation.GIVER) {
+     console.log('有捐款信息，捐款人：', donation.GIVER, '金额：', donation.AMOUNT);
+     const donationList = document.createElement('ul');
+     const donationItem = document.createElement('li');
+     donationItem.textContent = `Donor: ${donation.GIVER}, Amount: ${donation.AMOUNT}$`;
+     donationList.appendChild(donationItem);
+     dataDiv.appendChild(donationList);
+ } else {
+     console.log('没有捐款信息');
+     const noDonations = document.createElement('p');
+     noDonations.textContent = 'No donations yet.';
+     fundraiserCard.appendChild(noDonations);
+ }
+
+
+        });
+    }else{
+        dataDiv.textContent = "No fundraiser"
+    }
+    })
+
+    .catch(error =>{
+        console.error("Error here",error);
+        document.getElementById('data').textContent = "Load failure";
+    });
+
+}
 });
 
+
 function toDonate() {
-    window.location.href = '/donation';
+    const ID = localStorage.getItem('ID');
+    if (ID) {
+        window.location.href = `/donation?fundraiserId=${ID}`;
+    } else {
+        alert('No organizer found in local storage.');
+    }
 }

@@ -108,7 +108,7 @@ router.get("/Search/:search",(req,res)=>{
 });
 
 
-router.get("/:ORGANIZER",(req,res)=>{
+router.get("/:ID",(req,res)=>{
 //The get request on the fundraiser interface concatenates the organizational person in the route into sql to query the information of a single organizational person.
     connection.query(
         `SELECT 
@@ -126,7 +126,7 @@ router.get("/:ORGANIZER",(req,res)=>{
             CATEGORY c ON f.CATEGORY_ID = c.CATEGORY_ID        
         WHERE 
             f.ACTIVE=1
-            AND f.ORGANIZER='${req.params.ORGANIZER}';`,(err,records,fields)=>{
+            AND f.FUNDRAISER_ID='${req.params.ID}';`,(err,records,fields)=>{
                 if(err){
                     console.error("Error while retrieve the data");
                 }else{
@@ -136,6 +136,10 @@ router.get("/:ORGANIZER",(req,res)=>{
     )
 }
 );
+
+
+
+
 // 获取筹款活动详细信息（通过 ID）及捐款列表
 router.get("/fundraiser/:id", (req, res) => {
     const fundraiserId = req.params.id;
@@ -149,12 +153,16 @@ router.get("/fundraiser/:id", (req, res) => {
             f.CITY, 
             f.ACTIVE, 
             c.NAME AS CATEGORY_NAME,
-            d.* -- 假设 DONATION 表的字段
+           d.DONATION_ID,
+            d.DATE,
+            d.AMOUNT,
+            d.GIVER,
+            d.FUNDRAISER_ID AS DONATION_FUNDRAISER_ID
         FROM 
             FUNDRAISER f  
         JOIN 
             CATEGORY c ON f.CATEGORY_ID = c.CATEGORY_ID
-        LEFT JOIN -- 左连接以获取可能没有捐款的筹款活动信息
+        LEFT JOIN 
             DONATION d ON f.FUNDRAISER_ID = d.FUNDRAISER_ID
         WHERE 
             f.FUNDRAISER_ID =?;`, [fundraiserId], (err, records, fields) => {
