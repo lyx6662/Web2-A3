@@ -1,8 +1,6 @@
 <button (click)="openMyModal('add')">Add</button>  
 <app-add [isVisible]="isModalVisible && modalType === 'add'" (closeEvent)="handleModalClose()"></app-add>
 
-<button (click)="openMyModal('edit')">Edit</button>  
-<app-edit [isVisible]="isModalVisible && modalType === 'edit'" (closeEvent)="handleModalClose()"></app-edit>
 
 <div *ngIf="fundraisers.length > 0; else noData">
     <div *ngFor="let fundraiser of fundraisers" class="card">
@@ -13,9 +11,12 @@
       <p>City: {{fundraiser.CITY}}</p>
       <p>Category: {{fundraiser.CATEGORY_NAME}}({{fundraiser.CATEGORY_ID}})</p>
       <hr>
+      <button (click)="openMyModal('edit',fundraiser)">Edit</button>
+      <button (click)="deleteFundraiser(fundraiser.FUNDRAISER_ID)">Delete</button>
     </div>
   </div>
   
   <ng-template #noData>  
     <p>No fundraisers yet</p>  
   </ng-template>
+  <app-edit [fundraiserToEdit]="fundraiserToEditForModal"  [isVisible]="isModalVisible && modalType === 'edit'" (closeEvent)="handleModalClose()"></app-edit>

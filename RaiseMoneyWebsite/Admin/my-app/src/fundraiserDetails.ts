@@ -1,5 +1,5 @@
 export interface FundraiserDetails {
-    FUNDRAISER_ID?: number;  
+    FUNDRAISER_ID: number;  
     ORGANIZER: string;  
     CAPTION: string;  
     TARGET_FUNDING: number;
@@ -7,5 +7,5 @@ export interface FundraiserDetails {
     CITY: string;  
     ACTIVE: number;
     CATEGORY_NAME: string;  
-    CATEGORY_ID?: number;
+    CATEGORY_ID: number;
 }

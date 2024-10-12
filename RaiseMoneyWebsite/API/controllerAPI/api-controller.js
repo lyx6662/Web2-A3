@@ -197,13 +197,16 @@ router.post("/fundraiser", (req, res) => {
 // 更新筹款人信息
 router.put("/fundraiser/:id", (req, res) => {
     const fundraiserId = req.params.id;
-    const { organizer, caption, targetFunding, city, categoryId } = req.body;
-    connection.query(`UPDATE FUNDRAISER SET ORGANIZER =?, CAPTION =?, TARGET_FUNDING =?, CITY =?, CATEGORY_ID =? WHERE FUNDRAISER_ID =?`, [organizer, caption, targetFunding, city, categoryId, fundraiserId], (err, result) => {
+    console.log('Received request body:', req.body);
+    const { ORGANIZER, CAPTION, TARGET_FUNDING, CURRENT_FUNDING , CITY, CATEGORY_ID,ACTIVE } = req.body;
+    console.log('Received request body:', req.body);
+
+    connection.query(`UPDATE FUNDRAISER SET ORGANIZER =?, CAPTION =?, TARGET_FUNDING =?,CURRENT_FUNDING=?, CITY =?, CATEGORY_ID=?,ACTIVE=? WHERE FUNDRAISER_ID =?`, [ORGANIZER, CAPTION, TARGET_FUNDING, CURRENT_FUNDING, CITY, CATEGORY_ID, ACTIVE,fundraiserId], (err, result) => {
         if (err) {
             console.error("Error while updating fundraiser", err);
             res.status(500).send("Internal Error");
         } else {
-            res.send("Fundraiser updated successfully");
+            res.send({"message": "Fundraiser updated successfully"});
         }
     });
 });
@@ -218,14 +221,14 @@ router.delete("/fundraiser/:id", (req, res) => {
         } else {
             const donationCount = donationCountResult[0].donationCount;
             if (donationCount > 0) {
-                res.status(400).send("Cannot delete fundraiser with existing donations.");
+                res.status(400).send({ "message":"You cannot delete fundraiser who have contributed"});  
             } else {
                 connection.query(`DELETE FROM FUNDRAISER WHERE FUNDRAISER_ID =?`, [fundraiserId], (err, deleteResult) => {
                     if (err) {
                         console.error("Error while deleting fundraiser", err);
                         res.status(500).send("Internal Error");
                     } else {
-                        res.send("Fundraiser deleted successfully");
+                        res.send({"message": "Fundraiser deleted successfully"});
                     }
                 });
             }
