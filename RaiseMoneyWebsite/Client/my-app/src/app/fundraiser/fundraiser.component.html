@@ -1,0 +1,55 @@
+<div class="decorativeTop"> <!--Top navigation bar made of html and css, three pages common-->
+    <div class="webName">
+        <span class="text1">CHARITY</span>  
+    <span class="text2">fundraising</span>  
+    </div>
+    <div class="Navigation">
+        <a href="/"><span>home</span></a><a href="/search"><span>search</span></a><span class="current">fundraiser</span>
+        </div>
+    </div>
+
+
+    <button (click)="navigateToDonation()">Donate</button>
+
+    <div *ngIf="fundraisers.length > 0; ">
+        <div *ngFor="let fundraiser of fundraisers" class="home_card">
+        <div class="fundraiser_Card">
+
+            
+            <div class="card_Top">
+                <span class="text1">ID:{{fundraiser.FUNDRAISER_ID}}</span>
+                <span class="text2">Category:{{fundraiser.CATEGORY_NAME}}</span>
+            </div>
+            <h1>Fundraiser Caption</h1>
+            <div class="organizer_City">
+                <span class="text3">Organizer:{{fundraiser.ORGANIZER}}</span>
+                <span class="text4">City:{{fundraiser.CITY}}</span>
+            </div>
+            <div class="tAndC_Pro">
+                <div class="target_current">
+                    <h3>Target funding:{{fundraiser.TARGET_FUNDING}}</h3>
+                    <h3>Current funding:{{fundraiser.CURRENT_FUNDING}}$</h3>
+                    <p>Description: The fundraiser complies with the platform's fundraising regulations, if you want to donate to it, you can click the Donate button below. And thank you for your dedication to public welfare.</p>
+                </div>
+            </div>
+
+
+        </div>
+
+</div>
+
+
+
+<div *ngIf="donations && donations.length > 0 && donations[0].DONATION_ID; else noData">
+    <div *ngFor="let donation of donations">
+      <p>ID: {{donation.DONATION_ID}}, Giver: {{donation.GIVER }}, AMOUNT: {{donation.AMOUNT }}$, Date: {{donation.DATE  }}</p>
+      <hr>
+    </div>
+  </div>
+  
+  <ng-template #noData>  
+    <p>No fundraisers yet</p>  
+  </ng-template>
+
+
+

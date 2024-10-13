@@ -1,0 +1,11 @@
+h3{
+    color: #818080;
+    margin-top: -20px;
+    margin-left: 30px;
+}
+
+.big{
+    display: flex;  
+  justify-content: center;
+  align-items: center; 
+}

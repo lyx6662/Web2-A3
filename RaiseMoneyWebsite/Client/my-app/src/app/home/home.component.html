@@ -1,0 +1,30 @@
+<div class="decorativeTop"><!--Top navigation bar made of html and css, three pages common-->
+    <div class="webName">
+        <span class="text1">CHARITY</span>  
+    <span class="text2">fundraising</span>  
+    </div>
+    <div class="Navigation">
+        <span class="current">home</span><a href="/search"><span>search</span></a><a href="/fundraiser"><span>fundraiser</span></a>
+        </div>
+    </div>
+
+<div class="welcome">
+    <h2>Welcome to the charity fundraising platform</h2><!--A hard-coded welcome to the home page, which didn't feel very interesting, so I wrote one-->
+    
+</div>
+
+<div *ngIf="fundraisers.length > 0; else noData">
+    <div *ngFor="let fundraiser of fundraisers" class="home_card"  (click)="navigateToFundraiser(fundraiser.FUNDRAISER_ID)">
+      <h3>{{fundraiser.CAPTION}}</h3>
+      <p>Organizer: {{fundraiser.ORGANIZER}}({{fundraiser.FUNDRAISER_ID}})</p>
+      <p>Target Funding: {{fundraiser.TARGET_FUNDING}}</p>
+      <p>Current Funding: {{fundraiser.CURRENT_FUNDING}}</p>
+      <p>City: {{fundraiser.CITY}}</p>
+      <p>Category: {{fundraiser.CATEGORY_NAME}}({{fundraiser.CATEGORY_ID}})</p>
+      <hr>
+    </div>
+  </div>
+  
+  <ng-template #noData>  
+    <p>No fundraisers yet</p>  
+  </ng-template>

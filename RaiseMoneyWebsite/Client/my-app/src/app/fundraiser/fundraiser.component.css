@@ -1,0 +1,98 @@
+/*css for fundraiser*/
+.fundraiser_Card{
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin: 0 auto;  
+    margin-top: 50px;
+    margin-bottom: 10px;
+}
+
+.buttonDiv{
+    width: 80%;
+    margin: 0 auto; 
+
+}
+
+button {  
+    float: right;
+    padding: 10px 20px;  
+    border: none;  
+    border-radius: 4px;  
+    background-color: #ff6347; 
+    color: #fff;  
+    font-size: 16px;  
+    cursor: pointer;  
+    transition: background-color 0.3s;  
+} 
+
+button:hover{
+    background-color:  #ff4500; 
+}
+
+.card_Top{
+ margin-top: -8px;
+}
+
+.card_Top .text1 {  
+    color: rgb(115, 121, 119);  
+    font-size: 15px;
+}  
+  
+.card_Top .text2 {  
+    float: right;
+    color: rgb(115, 121, 119);  
+}
+
+.organizer_City{
+    width: 80%;
+    margin: 0 auto;  
+    margin-top: -20px;
+    margin-bottom: 30px;
+}
+
+.organizer_City .text3 {  
+    color: rgb(62, 63, 63);  
+    font-size: 15px;
+    font-style: italic;
+}  
+  
+.organizer_City .text4 {  
+    color: rgb(62, 63, 63);  
+    font-style: italic;
+    margin-left: 20px;
+
+}
+
+.tAndC_Pro{
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
+}
+
+.target_current{
+    flex: 1;
+}
+
+p{
+    width: 80%;
+    padding-left: 30px;
+}
+
+h3{
+    margin-left: 25px;
+    margin-bottom: 30px;
+}
+
+.skip {
+    flex: 1;
+    text-align: center;
+    text-decoration: none;
+    padding: 10px 20px;
+    color: rgb(16, 12, 12);
+}

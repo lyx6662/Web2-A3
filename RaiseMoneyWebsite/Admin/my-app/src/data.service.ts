@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, catchError, throwError } from 'rxjs';
 import { FundraiserDetails } from './fundraiserDetails';
 import { HttpClient} from '@angular/common/http';
-import { Giver } from './giver';
+
 
 @Injectable({
   providedIn: 'root'

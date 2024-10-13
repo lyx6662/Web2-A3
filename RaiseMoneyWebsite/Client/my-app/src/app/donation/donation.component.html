@@ -1,0 +1,40 @@
+<div class="decorativeTop"> <!--Top navigation bar made of html and css, three pages common-->
+    <div class="webName">
+        <span class="text1">CHARITY</span>  
+    <span class="text2">fundraising</span>  
+    </div>
+    <div class="Navigation">
+        <a href="/"><span>home</span></a><a href="/search"><span>search</span></a><a href="/fundraiser"><span>fundraiser</span></a>
+        </div>
+    </div>
+<div class="big">
+    <div *ngIf="fundraisers.length > 0; ">
+        <div *ngFor="let fundraiser of fundraisers" class="home_card">
+            <h1>Donate to {{fundraiser.ORGANIZER}} from {{fundraiser.CITY}}</h1>
+            <h3>{{fundraiser.CAPTION}}</h3>
+            <p>Target funding: {{fundraiser.TARGET_FUNDING}}</p>
+            <p>Current funding{{fundraiser.CURRENT_FUNDING}}</p>
+        </div>
+
+        <form #inputForm="ngForm">  
+            <div>  
+                <label for="yourName">Your Name: </label>  
+                <input id="yourName" [(ngModel)]="inputA.Giver" name="Giver" required />  
+              </div>  
+            <div>
+                <label for="amount">Caption:</label>
+                <input id="amount" [(ngModel)]="inputA.Amount" name="amount" required />
+            </div>
+        
+       
+            <button (click)="Submit(inputA)">Submit my donation</button>
+            </form>
+
+    </div>
+
+
+
+
+
+</div>
+    

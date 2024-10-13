@@ -46,6 +46,7 @@ router.get("/use/search/CATEGORY",(req,res)=>{
 router.get("/Search/:search",(req,res)=>{
 
     const searchParts = req.params.search.split('&');
+    console.log(searchParts);
     let query=
         `SELECT 
             f.FUNDRAISER_ID, 
@@ -178,13 +179,13 @@ router.get("/fundraiser/:id", (req, res) => {
 // 插入新的捐款
 router.post("/donation", (req, res) => {
     console.log(req.body);
-    const { fundraiserId, donorName, amount } = req.body;
-    connection.query(`INSERT INTO DONATION (FUNDRAISER_ID, GIVER, AMOUNT) VALUES (?,?,?)`, [fundraiserId, donorName, amount], (err, result) => {
+    const { Amount, FUNDRAISER_ID, Giver } = req.body;
+    connection.query(`INSERT INTO DONATION (FUNDRAISER_ID, GIVER, AMOUNT) VALUES (?,?,?)`, [FUNDRAISER_ID, Giver, Amount], (err, result) => {
         if (err) {
             console.error("Error while inserting donation", err);
             res.status(500).send("Internal Error");
         } else {
-            res.send("Donation inserted successfully");
+            res.send({ "message": "Donation inserted successfully" });
         }
     });
 });

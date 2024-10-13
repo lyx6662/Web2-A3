@@ -1,0 +1,48 @@
+
+<div class="decorativeTop"><!--Top navigation bar made of html and css, three pages common-->
+    <div class="webName">
+        <span class="text1">CHARITY</span>  
+    <span class="text2">fundraising</span>  
+    </div>
+    <div class="Navigation">
+        <a href="/"><span>home</span></a><span class="current">search</span><a href="/fundraiser"><span>fundraiser</span></a>
+        </div>
+    </div>
+
+
+    <form #searchForm="ngForm">  
+    <div>  
+        <label for="organizer">Organizer:</label>  
+        <input id="organizer" [(ngModel)]="search.ORGANIZER" name="organizer" required />  
+      </div>  
+    <div>
+        <label for="city">Caption:</label>
+        <input id="city" [(ngModel)]="search.CITY" name="city" required />
+    </div>
+
+    <div>
+        <label for="category">Category:</label>
+        <select [(ngModel)]="search.CATEGORY_NAME" name="categoryName">
+            <option [value]="">Please select a category</option> 
+            <option *ngFor="let cat of category" [value]="cat.NAME">{{cat.NAME}}</option>
+        </select>
+    </div>
+    <button (click)="startSearch(search.ORGANIZER,search.CITY,search.CATEGORY_NAME)">Search</button>
+    <button (click)="clear()">Clear</button>
+    </form>
+
+    <div *ngIf="showFundraiserDetails && fundraiserDetails.length > 0; else noData">
+        <div *ngFor="let fundraiser of fundraiserDetails" class="home_card" (click)="navigateToFundraiser(fundraiser.FUNDRAISER_ID)">
+          <h3>{{fundraiser.CAPTION}}</h3>
+          <p>Organizer: {{fundraiser.ORGANIZER}}({{fundraiser.FUNDRAISER_ID}})</p>
+          <p>Target Funding: {{fundraiser.TARGET_FUNDING}}</p>
+          <p>Current Funding: {{fundraiser.CURRENT_FUNDING}}</p>
+          <p>City: {{fundraiser.CITY}}</p>
+          <p>Category: {{fundraiser.CATEGORY_NAME}}({{fundraiser.CATEGORY_ID}})</p>
+          <hr>
+        </div>
+      </div>
+      
+      <ng-template #noData>  
+        <p class="Tips" *ngIf="showFundraiserDetails">No fundraisers found.</p>  
+      </ng-template>
