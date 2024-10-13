@@ -36,11 +36,11 @@ export class EditComponent {
       const currentValue = changes['fundraiserToEdit'].currentValue;  
       const previousValue = changes['fundraiserToEdit'].previousValue;  
   
-      // 检查当前值和之前值是否不同  
+      // Check whether the current value is different from the previous value  
       if (currentValue && currentValue !== previousValue) {  
         this.fundraiserDetails = { ...currentValue };  
 
-        console.log('Current FUNDRAISER_ID:', currentValue.FUNDRAISER_ID); // 添加此行以输出FUNDRAISER_ID
+        console.log('Current FUNDRAISER_ID:', currentValue.FUNDRAISER_ID); // Add this line to print FUNDRAISER_ID
         this.dataService.getGiver(currentValue.FUNDRAISER_ID).subscribe(
           donations => {
               this.donations = donations;
@@ -66,11 +66,11 @@ export class EditComponent {
   editFundraiser(fundraiserDetails: FundraiserDetails): void {  
     this.dataService.update(fundraiserDetails).subscribe(  
       response => {  
-        alert('成功更改'); // 显示成功添加的警告  
-        this.close(); // 关闭模态框  
+        alert('Successful change'); // A successful addition warning is displayed 
+        this.close(); // Close the mode box
       },  
       error => {  
-        console.error('添加筹款活动时出错:', error);  
+        console.error('An error occurred adding a fundraiser:', error);  
       }  
     );  
   }  

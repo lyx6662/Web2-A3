@@ -141,7 +141,7 @@ router.get("/:ID",(req,res)=>{
 
 
 
-// 获取筹款活动详细信息（通过 ID）及捐款列表
+// Get fundraising details (via ID) and a list of donations
 router.get("/fundraiser/:id", (req, res) => {
     const fundraiserId = req.params.id;
     connection.query(`
@@ -176,7 +176,7 @@ router.get("/fundraiser/:id", (req, res) => {
             });
 });
 
-// 插入新的捐款
+// Insert new contribution
 router.post("/donation", (req, res) => {
     console.log(req.body);
     const { Amount, FUNDRAISER_ID, Giver } = req.body;
@@ -190,7 +190,7 @@ router.post("/donation", (req, res) => {
     });
 });
 
-// 插入新的筹款人
+// Insert new fundraiser
 router.post("/fundraiser", (req, res) => {
     console.log('Received request body:', req.body);
     const { ORGANIZER, CAPTION, TARGET_FUNDING, CURRENT_FUNDING, CITY, CATEGORY_ID, ACTIVE } = req.body;
@@ -204,7 +204,7 @@ router.post("/fundraiser", (req, res) => {
     });
 });
 
-// 更新筹款人信息
+// Update fundraiser information
 router.put("/fundraiser/:id", (req, res) => {
     const fundraiserId = req.params.id;
     console.log('Received request body:', req.body);
@@ -221,7 +221,7 @@ router.put("/fundraiser/:id", (req, res) => {
     });
 });
 
-// 删除筹款人信息（如果没有捐款）
+// Delete fundraiser information (if no donations are made)
 router.delete("/fundraiser/:id", (req, res) => {
     const fundraiserId = req.params.id;
     connection.query(`SELECT COUNT(*) AS donationCount FROM DONATION WHERE FUNDRAISER_ID =?`, [fundraiserId], (err, donationCountResult) => {

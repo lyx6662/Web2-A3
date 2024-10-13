@@ -11,26 +11,26 @@ export class DataService {
   private apiUrl = 'http://localhost:3060/api/raisemoney';
 
   constructor(private http: HttpClient) {}
-  //管理端主页所有筹款人信息的http
+  //http to manage all fundraiser information on the main page
   public AllDetails(): Observable<FundraiserDetails[]> {
     return this.http.get<FundraiserDetails[]>(this.apiUrl);
   }
-  //管理端插入新的筹款人
+  //Insert a new fundraiser on the admin side
   public create(fundraiser: FundraiserDetails): Observable<any> {
     return this.http.post(this.apiUrl+'/fundraiser', fundraiser);
   }
-//管理端删除
+//Administrative delete
 public delete(id: number): Observable<any> {  
   return this.http.delete(`${this.apiUrl}/fundraiser/${id}`).pipe(  
     catchError(error => {  
-      // 在这里处理错误，可以发出警告或者记录错误  
+      //This is where errors are handled, either by issuing warnings or logging errors  
       console.error('Error deleting fundraiser:', error);  
-      // 返回一个 Observable，以便调用者可以处理错误  
+      // Returns an Observable so that the caller can handle the error  
       return throwError('Error deleting fundraiser');  
     })  
   );  
 }
-//管理端更新筹款人
+//Admin side updates fundraisers
   public update(fundraiser: FundraiserDetails): Observable<any> {
     return this.http.put(`${this.apiUrl}/fundraiser/${fundraiser.FUNDRAISER_ID}`, fundraiser);
   }

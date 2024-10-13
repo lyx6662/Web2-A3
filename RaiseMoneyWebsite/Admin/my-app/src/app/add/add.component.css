@@ -1,28 +1,25 @@
-/* 模态框覆盖层样式 */  
 .modal-overlay {  
-    position: fixed; /* 固定定位，使覆盖层覆盖整个页面 */  
+    position: fixed;  
     top: 0;  
     left: 0;  
     right: 0;  
     bottom: 0;  
-    background-color: rgba(0, 0, 0, 0.5); /* 半透明黑色背景 */  
+    background-color: rgba(0, 0, 0, 0.5); 
     display: flex;  
-    align-items: center; /* 垂直居中 */  
-    justify-content: center; /* 水平居中 */  
-    z-index: 1000; /* 确保覆盖层在其他内容之上 */  
+    align-items: center;   
+    justify-content: center;  
+    z-index: 1000; 
   }  
-    
-  /* 模态框内容区域样式 */  
+   
   .modal-content {  
-    background-color: #fff; /* 白色背景 */  
-    padding: 20px; /* 内边距 */  
-    border-radius: 8px; /* 圆角边框 */  
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* 阴影效果 */  
-    position: relative; /* 相对定位，以便内部元素可以绝对定位 */  
-    z-index: 1; /* 确保内容区域在覆盖层之上（虽然由于 flex 布局这通常不是必需的） */  
+    background-color: #fff;  
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 1; 
   }  
     
-  /* 可选的：为关闭按钮添加样式 */  
   .modal-content button {  
     background-color: #f44336;
     color: white;

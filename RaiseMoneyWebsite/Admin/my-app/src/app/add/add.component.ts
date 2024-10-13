@@ -43,11 +43,11 @@ export class AddComponent {
     saveFundraiser(fundraiserDetails: FundraiserDetails): void {  
       this.dataService.create(fundraiserDetails).subscribe(  
         response => {  
-          alert('成功添加'); // 显示成功添加的警告  
-          this.close(); // 关闭模态框  
+          alert('Successful addition'); // A successful addition warning is displayed
+          this.close(); // Close the mode box
         },  
         error => {  
-          console.error('添加筹款活动时出错:', error);  
+          console.error('An error occurred adding a fundraiser:', error);  
         }  
       );  
     }  

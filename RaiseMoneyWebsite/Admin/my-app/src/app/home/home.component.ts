@@ -51,15 +51,15 @@ export class HomeComponent implements OnInit {
     this.dataService.delete(ID).subscribe(  
       () => {  
         this.getAllFundraiser();
-        alert('筹款活动已删除'); // 显示成功删除的警告  
-        // 这里可以添加其他成功删除后的逻辑，比如刷新列表等  
+        alert('The fundraiser has been deleted'); // A successful deletion warning is displayed
+        // Here you can add other logic after successful deletion, such as refreshing the list
       },  
       error => {
-        console.error('删除筹款活动时出错:', error);
+        console.error('An error occurred while deleting a fundraiser:', error);
         
-            alert('该筹款活动有捐款，不能删除！');
+            alert('The fundraiser has donations and cannot be deleted！');
         
-        // 这里可以添加其他错误处理逻辑，比如显示错误消息给用户
+        // Additional error handling logic can be added here, such as displaying an error message to the user
     }
     );  
   }
